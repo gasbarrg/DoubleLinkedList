@@ -69,22 +69,29 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
         }
     }
 
-    public void add(Rental s) {
+    public void add(Rental r) {
         DNode temp = top;
 
-        // no list
+        //If no list, add to top
         if (top == null) {
-            top = new DNode(s, null, null);
+            top = new DNode(r, null, null);
             return;
         }
 
-        // s is a Game, and s goes on top
-        if (s instanceof Game && top.getData().getDueBack().after(s.dueBack)) {
-            top = new DNode(s, top, null);
+        //Add Games to top of list if closest due date
+        if (r instanceof Game && top.getData().getDueBack().after(r.dueBack)) {
+            top = new DNode(r, top, null);
             top.getNext().setPrev(top);
             return;
         }
 
+        //Add games to list in order of the closest due date
+        if (r instanceof Game){
+            temp = top.getNext();
+            while(temp != null && r.dueBack.after(temp.getData().dueBack)){
+                temp = temp.getNext();
+            }
+        }
     }
 
     public Rental remove(int index) {
@@ -101,12 +108,19 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
     }
 
     public Rental get(int index) {
-
+        //return null for empty list
         if (top == null)
             return null;
-
-        return top.getData();  // this line will need to be changed
+        //Temp node
+        DNode temp = top;
+        //Loop through list index # of times
+        for (int i = 0; i < index; i++) {
+            temp = temp.getNext();
+        }
+        //Return value at index
+        return temp.getData();
     }
+
 
     public void display() {
         DNode temp = top;
@@ -122,5 +136,4 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
                 ", size=" + size() +
                 '}';
     }
-
 }

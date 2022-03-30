@@ -52,7 +52,7 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
             System.out.println("next links " + total + " do not match prev links " + totalBack);
             throw new RuntimeException();
         }
-
+        System.out.println("next links = " + total + " prev links = " + totalBack);
         return total;
 
     }
@@ -71,11 +71,11 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
 
     public void add(Rental r) {
         DNode temp = top;
-        System.out.println("r = " + r.toString());
+        //System.out.println("r = " + r.toString());
         //If no list, add to top
         if (top == null) {
             top = new DNode(r, null, null);
-            System.out.println("SETTING TOP:" + r.toString() + "\n");
+            //System.out.println("SETTING TOP:" + r.toString() + "\n");
             return;
         }
 
@@ -83,18 +83,18 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
         if (r instanceof Game && top.getData().getDueBack().after(r.dueBack)) {
             top = new DNode(r, top, null);
             top.getNext().setPrev(top);
-            System.out.println("SETTING NEW TOP:" + r.toString() + "\n                " + temp.getData().toString());
+            //System.out.println("SETTING NEW TOP:" + r.toString() + "\n                " + temp.getData().toString());
             return;
         }
 
 
         //Add games to list in order of the closest due date
         else if(r instanceof Game){
-            System.out.println("ADDING TO LIST" + r.toString() + "\n" + temp.getData().toString());
+            //System.out.println("ADDING TO LIST" + r.toString() + "\n" + temp.getData().toString());
             //Search through list until the end, or when new rental due date is after value currently in list
             while(temp.getNext() != null && r.dueBack.after(temp.getData().dueBack)){
                 temp = temp.getNext();
-                System.out.println(temp.getData());
+                //System.out.println(temp.getData());
             }
             //Set next value to r Node
             temp.setNext(new DNode(r, temp.getNext(), temp));
@@ -103,26 +103,32 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
     }
 
     public Rental remove(int index) {
-
+        System.out.println("INDEX = " + index + "     SIZE = " + size());
         if (top == null)
             return null;
-
         DNode temp = top;
-        //in you are removing the head of the linked list
 
-        // more code here
+        if(index > size() - 1){
+            return null;
+        }
+
+        //in you are removing the head of the linked list
         if (index == 0) {
-            top = top.getNext();
+            if(size() > 1)
+                top.getNext().setPrev(null);
+            //if(size() == 1)
+            top = temp.getNext();
             return temp.getData();
         }
-        if (index < size()) {
 
-            for (int i = 0; i < index; i++) {
-                temp = temp.getNext();
-            }
+        for (int i = 0; i < index; i++) {
+            temp = temp.getNext();
+        }
+
+        if (index < size() - 1 ) {
+            System.out.println(temp.toString());
             temp.getNext().setPrev(temp.getPrev());
             temp.getPrev().setNext(temp.getNext());
-
             return temp.getData();
         }
         return null;

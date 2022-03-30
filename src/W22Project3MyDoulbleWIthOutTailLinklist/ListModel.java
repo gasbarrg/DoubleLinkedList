@@ -270,9 +270,9 @@ public class ListModel extends AbstractTableModel {
 
             add(game1);
             add(game2);
-//            add(game4);
+            add(game4);
 //            add(game5);
-//            add(game2);
+            add(game2);
 //            add(game3);
 //            add(game6);
 //            add(game7);

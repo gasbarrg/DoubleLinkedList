@@ -5,13 +5,27 @@ import java.util.Random;
 
 public class MyDoubleWithOutTailLinkedList implements Serializable {
 
+    /** Top node object of the list*/
     private DNode top;
+
+    //NODE REFERENCE
+/*    public DNode(Rental data, DNode next, DNode prev) {
+        super();
+        this.data = data;
+        this.next = next;
+        this.prev = prev;
+    }*/
+
 
     public MyDoubleWithOutTailLinkedList() {
         top = null;
     }
 
-    // This method has been provided and you are not permitted to modify
+    /******************************************************************
+     * Calculates the size of the current list
+     * DO NOT MODIFY
+     * @return the size of the list.
+     *******************************************************************/
     public int size() {
         if (top == null)
             return 0;
@@ -43,7 +57,10 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
 
     }
 
-    // This method has been provided and you are not permitted to modify
+    /******************************************************************
+     * Clears the current list
+     * DO NOT MODIFY
+     *******************************************************************/
     public void clear() {
         Random rand = new Random(13);
         while (size() > 0) {

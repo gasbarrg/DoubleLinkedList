@@ -108,11 +108,24 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
             return null;
 
         DNode temp = top;
+        //in you are removing the head of the linked list
 
-    // more code here
+        // more code here
+        if (index == 0) {
+            top = top.getNext();
+            return temp.getData();
+        }
+        if (index < size()) {
 
-            return null;
+            for (int i = 0; i < index; i++) {
+                temp = temp.getNext();
+            }
+            temp.getNext().setPrev(temp.getPrev());
+            temp.getPrev().setNext(temp.getNext());
 
+            return temp.getData();
+        }
+        return null;
     }
 
     public Rental get(int index) {

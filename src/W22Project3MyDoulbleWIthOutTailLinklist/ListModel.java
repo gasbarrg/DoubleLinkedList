@@ -271,17 +271,17 @@ public class ListModel extends AbstractTableModel {
             add(game1);
             add(game2);
             add(game4);
-//            add(game5);
+            add(game5);
             add(game2);
-//            add(game3);
-//            add(game6);
-//            add(game7);
+            add(game3);
+            add(game6);
+            add(game7);
 
-//            add(console1);
-//            add(console2);
-//            add(console5);
-//            add(console3);
-//            add(console4);
+            add(console1);
+            add(console2);
+            add(console5);
+            add(console3);
+            add(console4);
 
             /*
                 These commented out code is to help with debugging for step 2 and Step 3

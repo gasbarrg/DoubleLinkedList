@@ -48,11 +48,12 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
             temp = temp.getPrev();
         }
 
+
         if (total != totalBack) {
             System.out.println("next links " + total + " do not match prev links " + totalBack);
             throw new RuntimeException();
         }
-        System.out.println("next links = " + total + " prev links = " + totalBack);
+        //System.out.println("next links = " + total + " prev links = " + totalBack);
         return total;
 
     }
@@ -70,12 +71,12 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
     }
 
     public void add(Rental r) {
+        printList();
         DNode temp = top;
         //System.out.println("r = " + r.toString());
         //If no list, add to top
         if (top == null) {
             top = new DNode(r, null, null);
-            //System.out.println("SETTING TOP:" + r.toString() + "\n");
             return;
         }
 
@@ -83,55 +84,99 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
         if (r instanceof Game && top.getData().getDueBack().after(r.dueBack)) {
             top = new DNode(r, top, null);
             top.getNext().setPrev(top);
-            //System.out.println("SETTING NEW TOP:" + r.toString() + "\n                " + temp.getData().toString());
             return;
         }
 
-
         //Add games to list in order of the closest due date
         else if(r instanceof Game){
-            //System.out.println("ADDING TO LIST" + r.toString() + "\n" + temp.getData().toString());
             //Search through list until the end, or when new rental due date is after value currently in list
             while(temp.getNext() != null && r.dueBack.after(temp.getData().dueBack)){
                 temp = temp.getNext();
-                //System.out.println(temp.getData());
             }
             //Set next value to r Node
             temp.setNext(new DNode(r, temp.getNext(), temp));
-            temp.getNext().setPrev(temp);
+            //Select new node
+            temp = temp.getNext();
+            //If node ahead, set prev
+            if(temp.getNext() != null)
+                temp.getNext().setPrev(temp);
+            //If node before, set next
+            if(temp.getPrev() != null)
+                temp.getPrev().setNext(temp);
         }
+
+        //Add consoles after all games:
+        if(r instanceof Console) {
+            //Start at the beginning of console list
+            while (!(temp.getData() instanceof Console) && temp.getNext() != null) {
+                temp = temp.getNext();
+            }
+            //If no consoles, add to end of list
+            if (!(temp.getData() instanceof Console) ) {
+                //Set next value to r Node
+                temp.setNext(new DNode(r, temp.getNext(), temp));
+                //Select new node
+                temp = temp.getNext();
+                //If node before, set next
+                if (temp.getPrev() != null)
+                    temp.getPrev().setNext(temp);}
+            //If console due before first console, add to top of list
+            else if(temp.getData().dueBack.after(r.dueBack)){
+                temp = temp.getPrev();
+                //Set next value to r Node
+                temp.setNext(new DNode(r, temp.getNext(), temp));
+                //Select new node
+                temp = temp.getNext();
+                //If node ahead, set prev
+                if (temp.getNext() != null)
+                    temp.getNext().setPrev(temp);
+                //If node before, set next
+                if (temp.getPrev() != null)
+                    temp.getPrev().setNext(temp);
+            }
+            else {
+                //Search through list until the end, or when new rental due date is after value currently in list
+                while (temp.getNext() != null && r.dueBack.after(temp.getData().dueBack)) {
+                    temp = temp.getNext();
+                }
+                //Set next value to r Node
+                temp.setNext(new DNode(r, temp.getNext(), temp));
+                //Select new node
+                temp = temp.getNext();
+                //If node ahead, set prev
+                if (temp.getNext() != null)
+                    temp.getNext().setPrev(temp);
+                //If node before, set next
+                if (temp.getPrev() != null)
+                    temp.getPrev().setNext(temp);
+            }
+        }
+
+
     }
 
     public Rental remove(int index) {
-        System.out.println("INDEX = " + index + "     SIZE = " + size());
-        if (top == null)
+        if (top == null || get(index) == null)
             return null;
+        //Temp node
         DNode temp = top;
-
-        if(index > size() - 1){
-            return null;
-        }
-
-        //in you are removing the head of the linked list
-        if (index == 0) {
-            if(size() > 1)
-                top.getNext().setPrev(null);
-            //if(size() == 1)
-            top = temp.getNext();
-            return temp.getData();
-        }
-
+        //Get node @ index
         for (int i = 0; i < index; i++) {
             temp = temp.getNext();
         }
-
-        if (index < size() - 1 ) {
-            System.out.println(temp.toString());
-            temp.getNext().setPrev(temp.getPrev());
-            temp.getPrev().setNext(temp.getNext());
-            return temp.getData();
+        //If head is node to be deleted:
+        if (temp == top) {
+            top = top.getNext();
         }
-        return null;
+        //If node @ index is not the last, change next
+        if(temp.getNext() != null)
+            temp.getNext().setPrev(temp.getPrev());
+        //if node @ index is not the first, change prev
+        if(temp.getPrev() != null)
+            temp.getPrev().setNext(temp.getNext());
+
+
+        return temp.getData();
     }
 
     public Rental get(int index) {
@@ -163,4 +208,53 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
                 ", size=" + size() +
                 '}';
     }
+
+
+    public void printList() {
+        DNode temp = top;
+        if(temp != null && temp.getNext() != null)
+            do{
+                System.out.print(temp.getNext() + "\n");
+                temp = temp.getNext();
+            } while(temp.getNext() != null);
+
+        System.out.println();
+    }
 }
+
+
+
+/*
+         REMOVE METHOD PREVIOUS CODE
+        //in you are removing the head of the linked list
+        if (index == 0) {
+            if(size() > 1) {
+                temp = top.getNext();
+                top.getNext().setPrev(null);
+                top.getNext().setNext(null);
+                top = temp;
+                top.setPrev(null);
+            }
+            else if(size() == 1) {
+                System.out.println("Size == 1");
+                top = null;
+            }
+            else
+                top = temp.getNext();
+
+            return temp.getData();
+        }
+
+        for (int i = 0; i < index; i++) {
+            temp = temp.getNext();
+        }
+
+        if (index < size() - 1 ) {
+            System.out.println("HERE");
+            System.out.println(temp.toString());
+            temp.getNext().setPrev(temp.getPrev());
+            temp.getPrev().setNext(temp.getNext());
+            return temp.getData();
+        }
+        return null;
+ */

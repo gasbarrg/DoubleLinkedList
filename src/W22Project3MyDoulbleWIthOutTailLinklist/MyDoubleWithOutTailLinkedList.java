@@ -1,29 +1,21 @@
 package W22Project3MyDoulbleWIthOutTailLinklist;
-
 import java.io.Serializable;
 import java.util.Random;
+
 
 public class MyDoubleWithOutTailLinkedList implements Serializable {
 
     /** Top node object of the list*/
     private DNode top;
 
-    //NODE REFERENCE
-/*    public DNode(Rental data, DNode next, DNode prev) {
-        super();
-        this.data = data;
-        this.next = next;
-        this.prev = prev;
-    }*/
-
-
+    /** */
     public MyDoubleWithOutTailLinkedList() {
         top = null;
     }
 
     /******************************************************************
      * Calculates the size of the current list
-     * DO NOT MODIFY
+     *
      * @return the size of the list.
      *******************************************************************/
     public int size() {
@@ -60,7 +52,6 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
 
     /******************************************************************
      * Clears the current list
-     * DO NOT MODIFY
      *******************************************************************/
     public void clear() {
         Random rand = new Random(13);
@@ -70,10 +61,9 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
         }
     }
 
+
     public void add(Rental r) {
-        printList();
         DNode temp = top;
-        //System.out.println("r = " + r.toString());
         //If no list, add to top
         if (top == null) {
             top = new DNode(r, null, null);
@@ -90,18 +80,32 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
         //Add games to list in order of the closest due date
         else if(r instanceof Game){
             //Search through list until the end, or when new rental due date is after value currently in list
-            while(temp.getNext() != null && r.dueBack.after(temp.getData().dueBack)){
-                temp = temp.getNext();
+            while(temp.getNext() != null
+                    && r.dueBack.after(temp.getData().dueBack)
+                    && !r.dueBack.before(temp.getNext().getData().dueBack)) {
+                if (r.dueBack.equals(temp.getData().dueBack)){
+                    break;}
+                else
+                    temp = temp.getNext();
             }
+            int output = r.nameOfRenter.compareTo(temp.getData().nameOfRenter);
+            if (output < 0 && temp.getPrev()!= null) {
+                temp = temp.getPrev();
+            }
+            else if(output > 0 && temp.getNext()!= null)
+                while(output > 0 && r.dueBack.equals(temp.getData().dueBack) && temp.getNext() != null){
+                    temp = temp.getNext();
+                    output = r.nameOfRenter.compareTo(temp.getData().nameOfRenter);
+                }
             //Set next value to r Node
             temp.setNext(new DNode(r, temp.getNext(), temp));
             //Select new node
             temp = temp.getNext();
             //If node ahead, set prev
-            if(temp.getNext() != null)
+            if (temp.getNext() != null)
                 temp.getNext().setPrev(temp);
             //If node before, set next
-            if(temp.getPrev() != null)
+            if (temp.getPrev() != null)
                 temp.getPrev().setNext(temp);
         }
 
@@ -114,7 +118,7 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
             //If no consoles, add to end of list
             if (!(temp.getData() instanceof Console) ) {
                 //Set next value to r Node
-                temp.setNext(new DNode(r, temp.getNext(), temp));
+                temp.setNext(new DNode(r, null, temp));
                 //Select new node
                 temp = temp.getNext();
                 //If node before, set next
@@ -136,10 +140,10 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
             }
             else {
                 //Search through list until the end, or when new rental due date is after value currently in list
-                while (temp.getNext() != null && r.dueBack.after(temp.getData().dueBack)) {
+                while (temp.getNext() != null && r.dueBack.after(temp.getData().dueBack) && !r.dueBack.before(temp.getNext().getData().dueBack)) {
                     temp = temp.getNext();
                 }
-                //Set next value to r Node
+                //Set next node to r value
                 temp.setNext(new DNode(r, temp.getNext(), temp));
                 //Select new node
                 temp = temp.getNext();
@@ -151,8 +155,6 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
                     temp.getPrev().setNext(temp);
             }
         }
-
-
     }
 
     public Rental remove(int index) {
@@ -222,39 +224,60 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
     }
 }
 
+/*
+//Handle Equals method:
+            String tempName = temp.getData().nameOfRenter;
+            String newName = r.nameOfRenter;
+            int output = tempName.compareTo(newName);
+            if(size() < 2){
+                //Set next value to r Node
+                temp.setNext(new DNode(r, temp.getNext(), temp));
+                //Select new node
+                temp = temp.getNext();
+                //If node ahead, set prev
+                if (temp.getNext() != null)
+                    temp.getNext().setPrev(temp);
+                //If node before, set next
+                if (temp.getPrev() != null)
+                    temp.getPrev().setNext(temp);
+                return;
+            }
+            else if(output < 0 ){
+                temp = temp.getPrev();
+                //Set next value to r Node
+                temp.setNext(new DNode(r, temp.getNext(), temp));
+                //Select new node
+                temp = temp.getNext();
+                //If node ahead, set prev
+                if (temp.getNext() != null)
+                    temp.getNext().setPrev(temp);
+                //If node before, set next
+                if (temp.getPrev() != null)
+                    temp.getPrev().setNext(temp);
+            }
+            else{
+                //Set next value to r Node
+                temp.setNext(new DNode(r, temp.getNext(), temp));
+                //Select new node
+                temp = temp.getNext();
+                //If node ahead, set prev
+                if (temp.getNext() != null)
+                    temp.getNext().setPrev(temp);
+                //If node before, set next
+                if (temp.getPrev() != null)
+                    temp.getPrev().setNext(temp);
+            }
 
+ */
 
 /*
-         REMOVE METHOD PREVIOUS CODE
-        //in you are removing the head of the linked list
-        if (index == 0) {
-            if(size() > 1) {
-                temp = top.getNext();
-                top.getNext().setPrev(null);
-                top.getNext().setNext(null);
-                top = temp;
-                top.setPrev(null);
-            }
-            else if(size() == 1) {
-                System.out.println("Size == 1");
-                top = null;
-            }
-            else
-                top = temp.getNext();
-
-            return temp.getData();
-        }
-
-        for (int i = 0; i < index; i++) {
-            temp = temp.getNext();
-        }
-
-        if (index < size() - 1 ) {
-            System.out.println("HERE");
-            System.out.println(temp.toString());
-            temp.getNext().setPrev(temp.getPrev());
-            temp.getPrev().setNext(temp.getNext());
-            return temp.getData();
-        }
-        return null;
+                if(r.dueBack.equals(temp.getData().dueBack)) {
+                    String tempName = temp.getData().nameOfRenter;
+                    String newName = r.nameOfRenter;
+                    int output = tempName.compareTo(newName);
+                    if (output > 0 && temp != top) {
+                        System.out.println(r + "\n due before\n" + temp.getData());
+                        temp = temp.getPrev();
+                    }
+                    break;
  */

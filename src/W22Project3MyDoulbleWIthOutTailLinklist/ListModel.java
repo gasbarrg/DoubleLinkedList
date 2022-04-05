@@ -283,10 +283,10 @@ public class ListModel extends AbstractTableModel {
             add(console3);
             add(console4);
 
-            /*
-                These commented out code is to help with debugging for step 2 and Step 3
+
+            //These commented out code is to help with debugging for step 2 and Step 3
                 
-                add(game1);
+            add(game1);
             add(game4);
             add(console1);
             listOfRentals.remove(0);
@@ -306,13 +306,13 @@ public class ListModel extends AbstractTableModel {
                 System.out.println(listOfRentals.get(i).toString());
                 
             
-             */
+
             // create a bunch of them.
             int count = 0;
             Random rand = new Random(13);
             String guest = null;
 
-            while (count < 0) {
+            while (count < 50) {
                 Date date = df.parse("7/" + (rand.nextInt(10) + 2) + "/2020");
                 GregorianCalendar g = new GregorianCalendar();
                 g.setTime(date);

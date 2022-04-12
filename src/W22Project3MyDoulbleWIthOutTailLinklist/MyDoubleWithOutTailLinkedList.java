@@ -105,7 +105,7 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
         else if(r instanceof Game){
             //Search through list until the end, or when new rental due date is at or after value currently in list
             while(temp.getNext() != null && !r.dueBack.before(temp.getNext().getData().dueBack) ) {
-                if (r.dueBack.equals(temp.getData().dueBack))
+                if (r.dueBack.equals(temp.getData().dueBack) || temp.getNext().getData() instanceof Console)
                     break;  //Break Search if dates are equal , or reached end of games list
                 else
                     temp = temp.getNext();

@@ -1,3 +1,7 @@
+/**
+ * @Author Gabe & Justin Burch
+ * @Verson 4/11/2022
+ */
 package W22Project3MyDoulbleWIthOutTailLinklist;
 import java.io.Serializable;
 import java.util.Random;
@@ -8,7 +12,9 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
     /** Top node object of the list*/
     private DNode top;
 
-    /** */
+    /**
+     * Description - Is a constructor for the linked list that sets the top node to null.
+     */
     public MyDoubleWithOutTailLinkedList() {
         top = null;
     }
@@ -61,7 +67,13 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
         }
     }
 
-
+    /**
+     * Description - This method adds a new rental to the rental in the correct order of this list.
+     *               If the rental is the first ever it will just make it the first rental
+     *
+     * @param r This variable refers to the object being rented so it holds what date it was rented on,
+     *          when the rental needs to be returned, what was rented, name of renter.
+     */
     public void add(Rental r) {
         DNode temp = top;
         //If no list, add to top
@@ -178,7 +190,15 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
             }
         }
     }
-
+    /**
+     * Description - This method removes a rental and returns it.
+     *                  If the rental is the first ever it will just make it the first rental
+     *
+     * @param index The index refers to what Rental you want to remove, to remove a Rental from the list.
+     *
+     * @return This method will return the removed Rental data. If the list has nothing in it and
+     *         your try to remove something the then you will be returned null.
+     */
     public Rental remove(int index) {
         if (top == null || get(index) == null)
             return null;
@@ -202,7 +222,14 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
 
         return temp.getData();
     }
-
+    /**
+     * Description - This get method lets you get the rental data at a specific point.
+     *
+     * @param index The index refers to what Rental you want to get.
+     *
+     * @return This method will return the Rental data from the index you told it to get.
+     *         If the list has nothing in it then it will return null.
+     */
     public Rental get(int index) {
         //return null for empty list
         if (top == null)
@@ -218,6 +245,10 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
     }
 
 
+    /**
+     * Description - This get method will print out the data into the terminal.
+     *
+     */
     public void display() {
         DNode temp = top;
         while (temp != null) {
@@ -225,7 +256,10 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
             temp = temp.getNext();
         }
     }
-
+    /**
+     * Description - This method is here to be able to see the top and size of list.
+     * @return You are returning the string giving you the top and size.
+     */
     public String toString() {
         return "LL {" +
                 "top=" + top +
@@ -233,7 +267,9 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
                 '}';
     }
 
-
+    /**
+     *
+     */
     public void printList() {
         DNode temp = top;
         if(temp != null && temp.getNext() != null)

@@ -79,24 +79,28 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
 
         //Add games to list in order of the closest due date
         else if(r instanceof Game){
-            //Search through list until the end, or when new rental due date is after value currently in list
+            //Search through list until the end, or when new rental due date is at or after value currently in list
             while(temp.getNext() != null
-                    && r.dueBack.after(temp.getData().dueBack)
+                    // && r.dueBack.after(temp.getData().dueBack) <-- don't need
                     && !r.dueBack.before(temp.getNext().getData().dueBack)) {
-                if (r.dueBack.equals(temp.getData().dueBack)){
-                    break;}
+                //Break Search if dates are equal
+                if (r.dueBack.equals(temp.getData().dueBack))
+                    break;
                 else
                     temp = temp.getNext();
             }
-            int output = r.nameOfRenter.compareTo(temp.getData().nameOfRenter);
-            if (output < 0 && temp.getPrev()!= null) {
-                temp = temp.getPrev();
-            }
-            else if(output > 0 && temp.getNext()!= null)
-                while(output > 0 && r.dueBack.equals(temp.getData().dueBack) && temp.getNext() != null){
-                    temp = temp.getNext();
+            //If dates are equal, enter loop:
+            if (r.dueBack.equals(temp.getData().dueBack)) {
+                int output = r.nameOfRenter.compareTo(temp.getData().nameOfRenter);
+                while(output < 0 && temp.getPrev() != null && r.dueBack.equals(temp.getData().dueBack)) {
+                    temp = temp.getPrev();
                     output = r.nameOfRenter.compareTo(temp.getData().nameOfRenter);
                 }
+                while (output > 0 && r.dueBack.equals(temp.getData().dueBack) && temp.getNext() != null) {
+                    temp = temp.getNext();
+                    output = r.nameOfRenter.compareTo(temp.getData().nameOfRenter);
+                    }
+            }
             //Set next value to r Node
             temp.setNext(new DNode(r, temp.getNext(), temp));
             //Select new node
@@ -140,8 +144,26 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
             }
             else {
                 //Search through list until the end, or when new rental due date is after value currently in list
-                while (temp.getNext() != null && r.dueBack.after(temp.getData().dueBack) && !r.dueBack.before(temp.getNext().getData().dueBack)) {
-                    temp = temp.getNext();
+                while (temp.getNext() != null
+                        && r.dueBack.after(temp.getData().dueBack)
+                        && !r.dueBack.before(temp.getNext().getData().dueBack)) {
+                    //Break Search if dates are equal
+                    if (r.dueBack.equals(temp.getData().dueBack))
+                        break;
+                    else
+                        temp = temp.getNext();
+                }
+                //If dates are equal, enter loop:
+                if (r.dueBack.equals(temp.getData().dueBack)) {
+                    int output = r.nameOfRenter.compareTo(temp.getData().nameOfRenter);
+                    while(output < 0 && temp.getPrev() != null && r.dueBack.equals(temp.getData().dueBack)) {
+                        temp = temp.getPrev();
+                        output = r.nameOfRenter.compareTo(temp.getData().nameOfRenter);
+                    }
+                    while (output > 0 && r.dueBack.equals(temp.getData().dueBack) && temp.getNext() != null) {
+                        temp = temp.getNext();
+                        output = r.nameOfRenter.compareTo(temp.getData().nameOfRenter);
+                    }
                 }
                 //Set next node to r value
                 temp.setNext(new DNode(r, temp.getNext(), temp));

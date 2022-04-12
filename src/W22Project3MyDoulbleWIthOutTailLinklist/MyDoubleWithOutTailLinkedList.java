@@ -101,15 +101,22 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
                 else
                     temp = temp.getNext();
             }
+
             //If dates are equal, enter loop:
             if (r.dueBack.equals(temp.getData().dueBack)) {
                 int output = r.nameOfRenter.compareTo(temp.getData().nameOfRenter);
-                while(output < 0 && temp.getPrev() != null && r.dueBack.equals(temp.getData().dueBack)) {
+                while(output <= 0 && temp.getPrev() != null && r.dueBack.equals(temp.getData().dueBack)) {
                     temp = temp.getPrev();
+//                    if(!r.dueBack.equals(temp.getData().dueBack)){
+//                        temp = temp.getNext();
+//                        break;}
                     output = r.nameOfRenter.compareTo(temp.getData().nameOfRenter);
                 }
-                while (output > 0 && r.dueBack.equals(temp.getData().dueBack) && temp.getNext() != null) {
+                while (output > 0 && temp.getNext() != null && r.dueBack.equals(temp.getData().dueBack)) {
                     temp = temp.getNext();
+                    if(!r.dueBack.equals(temp.getData().dueBack)){
+                        temp = temp.getPrev();
+                        break;}
                     output = r.nameOfRenter.compareTo(temp.getData().nameOfRenter);
                     }
             }
@@ -168,12 +175,18 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
                 //If dates are equal, enter loop:
                 if (r.dueBack.equals(temp.getData().dueBack)) {
                     int output = r.nameOfRenter.compareTo(temp.getData().nameOfRenter);
-                    while(output < 0 && temp.getPrev() != null && r.dueBack.equals(temp.getData().dueBack)) {
+                    while(output <= 0 && temp.getPrev() != null && r.dueBack.equals(temp.getData().dueBack)) {
                         temp = temp.getPrev();
+//                    if(!r.dueBack.equals(temp.getData().dueBack)){
+//                        temp = temp.getNext();
+//                        break;}
                         output = r.nameOfRenter.compareTo(temp.getData().nameOfRenter);
                     }
-                    while (output > 0 && r.dueBack.equals(temp.getData().dueBack) && temp.getNext() != null) {
+                    while (output > 0 && temp.getNext() != null && r.dueBack.equals(temp.getData().dueBack)) {
                         temp = temp.getNext();
+                        if(!r.dueBack.equals(temp.getData().dueBack)){
+                            temp = temp.getPrev();
+                            break;}
                         output = r.nameOfRenter.compareTo(temp.getData().nameOfRenter);
                     }
                 }
@@ -191,7 +204,7 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
         }
     }
     /**
-     * Description - This method removes a rental and returns it.
+     * Removes a rental and returns it.
      *
      * @param index The index refers to what Rental you want to remove, to remove a Rental from the list.
      *
@@ -222,9 +235,9 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
         return temp.getData();
     }
     /**
-     * Description - This get method lets you get the rental data at a specific point.
+     * Get rental data at location "index"
      *
-     * @param index The index refers to what Rental you want to get.
+     * @param index The index refers to what location to retrieve data from
      *
      * @return This method will return the Rental data from the index you told it to get.
      *         If the list has nothing in it then it will return null.
@@ -245,7 +258,7 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
 
 
     /**
-     * Description - This get method will print out the data into the terminal.
+     * Print entire linked list to terminal
      *
      */
     public void display() {
@@ -256,7 +269,7 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
         }
     }
     /**
-     * Description - This method is here to be able to see the top and size of list.
+     * Print the top and size of list.
      * @return You are returning the string giving you the top and size.
      */
     public String toString() {
@@ -265,76 +278,30 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
                 ", size=" + size() +
                 '}';
     }
-
-    /**
-     *
-     */
-    public void printList() {
-        DNode temp = top;
-        if(temp != null && temp.getNext() != null)
-            do{
-                System.out.print(temp.getNext() + "\n");
-                temp = temp.getNext();
-            } while(temp.getNext() != null);
-
-        System.out.println();
-    }
 }
 
-/*
-//Handle Equals method:
-            String tempName = temp.getData().nameOfRenter;
-            String newName = r.nameOfRenter;
-            int output = tempName.compareTo(newName);
-            if(size() < 2){
-                //Set next value to r Node
-                temp.setNext(new DNode(r, temp.getNext(), temp));
-                //Select new node
-                temp = temp.getNext();
-                //If node ahead, set prev
-                if (temp.getNext() != null)
-                    temp.getNext().setPrev(temp);
-                //If node before, set next
-                if (temp.getPrev() != null)
-                    temp.getPrev().setNext(temp);
-                return;
-            }
-            else if(output < 0 ){
-                temp = temp.getPrev();
-                //Set next value to r Node
-                temp.setNext(new DNode(r, temp.getNext(), temp));
-                //Select new node
-                temp = temp.getNext();
-                //If node ahead, set prev
-                if (temp.getNext() != null)
-                    temp.getNext().setPrev(temp);
-                //If node before, set next
-                if (temp.getPrev() != null)
-                    temp.getPrev().setNext(temp);
-            }
-            else{
-                //Set next value to r Node
-                temp.setNext(new DNode(r, temp.getNext(), temp));
-                //Select new node
-                temp = temp.getNext();
-                //If node ahead, set prev
-                if (temp.getNext() != null)
-                    temp.getNext().setPrev(temp);
-                //If node before, set next
-                if (temp.getPrev() != null)
-                    temp.getPrev().setNext(temp);
-            }
-
- */
 
 /*
-                if(r.dueBack.equals(temp.getData().dueBack)) {
-                    String tempName = temp.getData().nameOfRenter;
-                    String newName = r.nameOfRenter;
-                    int output = tempName.compareTo(newName);
-                    if (output > 0 && temp != top) {
-                        System.out.println(r + "\n due before\n" + temp.getData());
+
+            //If dates are equal, enter loop:
+            if (r.dueBack.equals(temp.getData().dueBack)) {
+                int output = r.nameOfRenter.compareTo(temp.getData().nameOfRenter);
+                while(output < 0 && temp.getPrev() != null && r.dueBack.equals(temp.getData().dueBack)) {
+                    if(!r.dueBack.equals(temp.getData().dueBack)){
+                        temp = temp.getNext();
+                        break;}
+                    else
                         temp = temp.getPrev();
+                    output = r.nameOfRenter.compareTo(temp.getData().nameOfRenter);
+                }
+                while (output > 0 && r.dueBack.equals(temp.getData().dueBack) && temp.getNext() != null) {
+                    if(!r.dueBack.equals(temp.getData().dueBack)){
+                        temp = temp.getPrev();
+                        break;}
+                    else
+                        temp = temp.getNext();
+                    output = r.nameOfRenter.compareTo(temp.getData().nameOfRenter);
                     }
-                    break;
+            }
+
  */

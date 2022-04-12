@@ -72,7 +72,7 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
      *               If the rental is the first ever it will just make it the first rental
      *
      * @param r This variable refers to the object being rented so it holds what date it was rented on,
-     *          when the rental needs to be returned, what was rented, name of renter.
+     *                when the rental needs to be returned, what was rented, name of renter.
      */
     public void add(Rental r) {
         DNode temp = top;
@@ -192,7 +192,6 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
     }
     /**
      * Description - This method removes a rental and returns it.
-     *                  If the rental is the first ever it will just make it the first rental
      *
      * @param index The index refers to what Rental you want to remove, to remove a Rental from the list.
      *

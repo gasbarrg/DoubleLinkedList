@@ -19,11 +19,11 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
         top = null;
     }
 
-    /******************************************************************
+    /**
      * Calculates the size of the current list
      *
      * @return the size of the list.
-     *******************************************************************/
+     */
     public int size() {
         if (top == null)
             return 0;
@@ -56,9 +56,9 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
 
     }
 
-    /******************************************************************
+    /**
      * Clears the current list
-     *******************************************************************/
+     */
     public void clear() {
         Random rand = new Random(13);
         while (size() > 0) {
@@ -92,44 +92,29 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
         //Add games to list in order of the closest due date
         else if(r instanceof Game){
             //Search through list until the end, or when new rental due date is at or after value currently in list
-            while(temp.getNext() != null
-                    // && r.dueBack.after(temp.getData().dueBack) <-- don't need
-                    && !r.dueBack.before(temp.getNext().getData().dueBack)) {
-                //Break Search if dates are equal
+            while(temp.getNext() != null && !r.dueBack.before(temp.getNext().getData().dueBack)) {
                 if (r.dueBack.equals(temp.getData().dueBack))
-                    break;
+                    break;  //Break Search if dates are equal
                 else
                     temp = temp.getNext();
             }
-
             //If dates are equal, enter loop:
             if (r.dueBack.equals(temp.getData().dueBack)) {
                 int output = r.nameOfRenter.compareTo(temp.getData().nameOfRenter);
-                while(output <= 0 && temp.getPrev() != null && r.dueBack.equals(temp.getData().dueBack)) {
-                    temp = temp.getPrev();
-//                    if(!r.dueBack.equals(temp.getData().dueBack)){
-//                        temp = temp.getNext();
-//                        break;}
-                    output = r.nameOfRenter.compareTo(temp.getData().nameOfRenter);
-                }
+                //Move forward until name belongs in list.
                 while (output > 0 && temp.getNext() != null && r.dueBack.equals(temp.getData().dueBack)) {
                     temp = temp.getNext();
                     if(!r.dueBack.equals(temp.getData().dueBack)){
                         temp = temp.getPrev();
                         break;}
                     output = r.nameOfRenter.compareTo(temp.getData().nameOfRenter);
-                    }
+                }
+                //Move backward until name belongs in list
+                while(output <= 0 && temp.getPrev() != null && r.dueBack.equals(temp.getData().dueBack)) {
+                    temp = temp.getPrev();
+                    output = r.nameOfRenter.compareTo(temp.getData().nameOfRenter);
+                }
             }
-            //Set next value to r Node
-            temp.setNext(new DNode(r, temp.getNext(), temp));
-            //Select new node
-            temp = temp.getNext();
-            //If node ahead, set prev
-            if (temp.getNext() != null)
-                temp.getNext().setPrev(temp);
-            //If node before, set next
-            if (temp.getPrev() != null)
-                temp.getPrev().setNext(temp);
         }
 
         //Add consoles after all games:
@@ -138,28 +123,10 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
             while (!(temp.getData() instanceof Console) && temp.getNext() != null) {
                 temp = temp.getNext();
             }
-            //If no consoles, add to end of list
-            if (!(temp.getData() instanceof Console) ) {
-                //Set next value to r Node
-                temp.setNext(new DNode(r, null, temp));
-                //Select new node
-                temp = temp.getNext();
-                //If node before, set next
-                if (temp.getPrev() != null)
-                    temp.getPrev().setNext(temp);}
+
             //If console due before first console, add to top of list
-            else if(temp.getData().dueBack.after(r.dueBack)){
+            if(temp.getData().dueBack.after(r.dueBack)){
                 temp = temp.getPrev();
-                //Set next value to r Node
-                temp.setNext(new DNode(r, temp.getNext(), temp));
-                //Select new node
-                temp = temp.getNext();
-                //If node ahead, set prev
-                if (temp.getNext() != null)
-                    temp.getNext().setPrev(temp);
-                //If node before, set next
-                if (temp.getPrev() != null)
-                    temp.getPrev().setNext(temp);
             }
             else {
                 //Search through list until the end, or when new rental due date is after value currently in list
@@ -175,13 +142,7 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
                 //If dates are equal, enter loop:
                 if (r.dueBack.equals(temp.getData().dueBack)) {
                     int output = r.nameOfRenter.compareTo(temp.getData().nameOfRenter);
-                    while(output <= 0 && temp.getPrev() != null && r.dueBack.equals(temp.getData().dueBack)) {
-                        temp = temp.getPrev();
-//                    if(!r.dueBack.equals(temp.getData().dueBack)){
-//                        temp = temp.getNext();
-//                        break;}
-                        output = r.nameOfRenter.compareTo(temp.getData().nameOfRenter);
-                    }
+                    //Move forward until name belongs in list.
                     while (output > 0 && temp.getNext() != null && r.dueBack.equals(temp.getData().dueBack)) {
                         temp = temp.getNext();
                         if(!r.dueBack.equals(temp.getData().dueBack)){
@@ -189,27 +150,31 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
                             break;}
                         output = r.nameOfRenter.compareTo(temp.getData().nameOfRenter);
                     }
+                    //Move backward until name belongs in list
+                    while(output <= 0 && temp.getPrev() != null && r.dueBack.equals(temp.getData().dueBack)) {
+                        temp = temp.getPrev();
+                        output = r.nameOfRenter.compareTo(temp.getData().nameOfRenter);
+                    }
                 }
-                //Set next node to r value
-                temp.setNext(new DNode(r, temp.getNext(), temp));
-                //Select new node
-                temp = temp.getNext();
-                //If node ahead, set prev
-                if (temp.getNext() != null)
-                    temp.getNext().setPrev(temp);
-                //If node before, set next
-                if (temp.getPrev() != null)
-                    temp.getPrev().setNext(temp);
             }
         }
+        //Set next value to r Node
+        temp.setNext(new DNode(r, temp.getNext(), temp));
+        //Select new node
+        temp = temp.getNext();
+        //If node ahead, set prev
+        if (temp.getNext() != null)
+            temp.getNext().setPrev(temp);
+        //If node before, set next
+        if (temp.getPrev() != null)
+            temp.getPrev().setNext(temp);
     }
     /**
      * Removes a rental and returns it.
      *
-     * @param index The index refers to what Rental you want to remove, to remove a Rental from the list.
+     * @param index Location of the rental to be removed.
      *
-     * @return This method will return the removed Rental data. If the list has nothing in it and
-     *         your try to remove something the then you will be returned null.
+     * @return  return the removed Rental data. If no data, return null.
      */
     public Rental remove(int index) {
         if (top == null || get(index) == null)
@@ -239,7 +204,7 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
      *
      * @param index The index refers to what location to retrieve data from
      *
-     * @return This method will return the Rental data from the index you told it to get.
+     * @return This method will return the Rental data from the index.
      *         If the list has nothing in it then it will return null.
      */
     public Rental get(int index) {

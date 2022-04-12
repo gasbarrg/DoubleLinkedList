@@ -1,5 +1,5 @@
 /**
- * @Author Gabe & Justin Burch
+ * @Author Gabe Gasbarre & Justin Burch
  * @Verson 4/11/2022
  */
 package W22Project3MyDoulbleWIthOutTailLinklist;

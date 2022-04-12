@@ -22,8 +22,15 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
     /**
      * Calculates the size of the current list
      *
-     * @return the size of the list.
+     * @return the size of the list. If the list has nothing in it returns 0.
      */
+
+    /******************************************************************
+     * Description -Calculates the size of the current list
+     *
+     * @return the size of the list. If the list has nothing in it returns 0.
+     *******************************************************************/
+
     public int size() {
         if (top == null)
             return 0;
@@ -56,9 +63,14 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
 
     }
 
+
     /**
-     * Clears the current list
+     * Description - Clears the current list
      */
+
+    /******************************************************************
+     * Description - Clears the current list
+     *******************************************************************/
     public void clear() {
         Random rand = new Random(13);
         while (size() > 0) {

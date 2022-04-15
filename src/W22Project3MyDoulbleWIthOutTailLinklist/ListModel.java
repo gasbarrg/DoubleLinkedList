@@ -312,7 +312,7 @@ public class ListModel extends AbstractTableModel {
             Random rand = new Random(13);
             String guest = null;
 
-            while (count < 50) {
+            while (count < 100) {
                 Date date = df.parse("7/" + (rand.nextInt(10) + 2) + "/2020");
                 GregorianCalendar g = new GregorianCalendar();
                 g.setTime(date);

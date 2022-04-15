@@ -25,12 +25,6 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
      * @return the size of the list. If the list has nothing in it returns 0.
      */
 
-    /******************************************************************
-     * Description -Calculates the size of the current list
-     *
-     * @return the size of the list. If the list has nothing in it returns 0.
-     *******************************************************************/
-
     public int size() {
         if (top == null)
             return 0;
@@ -67,10 +61,6 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
     /**
      * Description - Clears the current list
      */
-
-    /******************************************************************
-     * Description - Clears the current list
-     *******************************************************************/
     public void clear() {
         Random rand = new Random(13);
         while (size() > 0) {
@@ -110,6 +100,7 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
                 else
                     temp = temp.getNext();
             }
+
             //If dates are equal, enter loop:
             if (r.dueBack.equals(temp.getData().dueBack)) {
                 int output = r.nameOfRenter.compareTo(temp.getData().nameOfRenter);
@@ -256,29 +247,3 @@ public class MyDoubleWithOutTailLinkedList implements Serializable {
                 '}';
     }
 }
-
-
-/*
-
-            //If dates are equal, enter loop:
-            if (r.dueBack.equals(temp.getData().dueBack)) {
-                int output = r.nameOfRenter.compareTo(temp.getData().nameOfRenter);
-                while(output < 0 && temp.getPrev() != null && r.dueBack.equals(temp.getData().dueBack)) {
-                    if(!r.dueBack.equals(temp.getData().dueBack)){
-                        temp = temp.getNext();
-                        break;}
-                    else
-                        temp = temp.getPrev();
-                    output = r.nameOfRenter.compareTo(temp.getData().nameOfRenter);
-                }
-                while (output > 0 && r.dueBack.equals(temp.getData().dueBack) && temp.getNext() != null) {
-                    if(!r.dueBack.equals(temp.getData().dueBack)){
-                        temp = temp.getPrev();
-                        break;}
-                    else
-                        temp = temp.getNext();
-                    output = r.nameOfRenter.compareTo(temp.getData().nameOfRenter);
-                    }
-            }
-
- */

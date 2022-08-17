@@ -31,21 +31,6 @@ public class Console extends Rental {
     @Override
     public double getCost(GregorianCalendar dueBack) {
 
-        // Do not use this approach.
-        //String dateBeforeString = "2017-05-24";
-        //	String dateAfterString = "2017-07-29";
-        //
-        //	//Parsing the date
-        //	LocalDate dateBefore = LocalDate.parse(dateBeforeString);
-        //	LocalDate dateAfter = LocalDate.parse(dateAfterString);
-        //
-        //	//calculating number of days in between
-        //	long noOfDaysBetween = ChronoUnit.DAYS.between(dateBefore, dateAfter);
-        //
-        //	//displaying the number of days
-        //	System.out.println(noOfDaysBetween);
-        //
-
         GregorianCalendar gTemp = new GregorianCalendar();
         double cost = 5;
         //        Date d = dueBack.getTime();
